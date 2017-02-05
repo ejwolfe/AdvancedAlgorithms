@@ -2,11 +2,10 @@
  * Created by EricWolfe on 1/23/2017.
  */
 public class QuickSort {
-    public QuickSort(int array[]){
-        quickSort(array, 0, array.length);
-    }
 
-    private void quickSort(int array[], int low, int high){
+    public QuickSort(int[] array) { quickSort(array, 0, array.length);}
+
+    private void quickSort(int[] array, int low, int high){
         if (low < high){
             int pivot_location = partition(array, low, high);
             quickSort(array, low, pivot_location);
@@ -20,7 +19,7 @@ public class QuickSort {
 
         for (int i = low + 1; i < high; i++){
             if (array[i] < pivot){
-                swap(array[i], array[leftwall]);
+                swap(array, i, leftwall);
                 leftwall++;
             }
         }
@@ -28,9 +27,9 @@ public class QuickSort {
         return leftwall;
     }
 
-    private void swap(int num1, int num2){
-        int temp = num1;
-        num1 = num2;
-        num2 = temp;
+    private void swap(int array[], int num1, int num2){
+        int temp = array[num1];
+        array[num1] = array[num2];
+        array[num2] = temp;
     }
 }

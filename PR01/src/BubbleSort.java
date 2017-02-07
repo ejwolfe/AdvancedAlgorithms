@@ -1,5 +1,5 @@
 /**
- * Created by GlitchRebel on 1/23/2017.
+ * Created by Eric Wolfe on 1/23/2017.
  */
 public class BubbleSort {
     public BubbleSort(int[] array){

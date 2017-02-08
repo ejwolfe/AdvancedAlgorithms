@@ -3,6 +3,7 @@
  */
 public class RadixSort
 {
+    //Constructor for running the radix sort
     public RadixSort(int[] array, int size)
     {
         if (array.length != 0)
@@ -11,6 +12,7 @@ public class RadixSort
         }
     }
 
+    //Main function for radix sort
     private void radixSort(int[] array, int size)
     {
       int exp = 1, curr = array[0];
@@ -41,7 +43,7 @@ public class RadixSort
         {
           array[i] = temp[i];
         }
-        exp *= 10;
+        exp *= 10; //Increase the decimal place we are looking at
       }
     }
 }

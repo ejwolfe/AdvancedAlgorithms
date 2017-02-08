@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BucketSort {
+    //Constructor for running bucket sort
     public BucketSort(int[] array, int choice, int amountBuckets)
     {
         if (array.length != 0 && amountBuckets > 0) {
@@ -9,6 +10,7 @@ public class BucketSort {
         }
     }
 
+    //Main bucket sort algorithm
     private void bucketSort(int[] array, int choice, int amountBuckets)
     {
         int min = array[0];
@@ -41,6 +43,7 @@ public class BucketSort {
         {
             Integer[] temp = new Integer[buckets.get(i).size()];
             temp = buckets.get(i).toArray(temp);
+            //Runs the selected algorithm
             switch (choice)
             {
                 case 1:

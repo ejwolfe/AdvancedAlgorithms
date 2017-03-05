@@ -3,15 +3,20 @@
  */
 public class RadixSort
 {
-    public RadixSort(int[] array)
+    //Constructor for running the radix sort
+    public RadixSort(int[] array, int size)
     {
-      radixSort(array);
+        if (array.length != 0)
+        {
+            radixSort(array, size);
+        }
     }
 
-    private void radixSort(int[] array)
+    //Main function for radix sort
+    private void radixSort(int[] array, int size)
     {
       int exp = 1, curr = array[0];
-      int[] temp = new int[10];
+      int[] temp = new int[size];
       for (int i = 1; i < array.length; i++)
       {
         if (array[i] > curr)
@@ -21,7 +26,7 @@ public class RadixSort
       }
       while ((curr / exp) > 0)
       {
-        int[] bucket = new int[10];
+        int[] bucket = new int[size];
         for (int i = 0; i < array.length; i++)
         {
           bucket[(array[i] / exp) % 10]++;
@@ -38,17 +43,7 @@ public class RadixSort
         {
           array[i] = temp[i];
         }
-        printArray(array);
-        exp *= 10;
+        exp *= 10; //Increase the decimal place we are looking at
       }
-    }
-
-    private void printArray(int[] array)
-    {
-        for (int i = 0; i < array.length; i++)
-        {
-            System.out.print(array[i] + " ");
-        }
-        System.out.println();
     }
 }

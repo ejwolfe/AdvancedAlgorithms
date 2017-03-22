@@ -44,7 +44,7 @@ public class ConvexHull
 
             for (int i = 0; i < hull.size(); i++)
             {
-                System.out.println("(" + hull.elementAt(i).getX() + ", " + hull.elementAt(i).getY() + ")");
+                System.out.println(hull.elementAt(i).getX() + " " + hull.elementAt(i).getY());
             }
         }
     }

@@ -1,107 +1,98 @@
-/**
- * Created by glitch on 3/5/17.
- */
+import java.util.*;
 
-import java.util.Stack;
+public final class GrahamScan {
 
-public class GrahamScan
-{
-    Point p0;
+    public List<Point> stack;
 
-    public GrahamScan(Point points[])
+    public GrahamScan(List<Point> points)
     {
-
+        this.stack = getConvexHull(points);
     }
 
-    private void grahamScan(Point points[])
-    {
-        int n = points.length;
-
-        int ymin = points[0].getY(), min = 0;
-        for (int i = 1; i < n; i++)
+    private List<Point> getConvexHull(List<Point> points) {
+        List<Point> sorted = new ArrayList<Point>(getSortedPointSet(points));
+        if(sorted.size() < 3)
+            System.out.println("You have to have more than 3 points");
+        Stack<Point> stack = new Stack<Point>();
+        stack.push(sorted.get(0));
+        stack.push(sorted.get(1));
+        for (int i = 2; i < sorted.size(); i++)
         {
-            if ((points[i].getY() < ymin || (ymin == points[i].getY() && points[i].getX() < points[min].getX())))
+            Point head = sorted.get(i);
+            Point middle = stack.pop();
+            Point tail = stack.peek();
+            int turn = getTurn(tail, middle, head);
+            switch(turn)
             {
-                ymin = points[i].getY();
-                min = i;
+                case -1:
+                    i--;
+                    break;
+                case 0:
+                    stack.push(head);
+                    break;
+                case 1:
+                    stack.push(middle);
+                    stack.push(head);
+                    break;
             }
         }
+        return new ArrayList<Point>(stack);
+    }
 
-        swap(points, 0, min);
-        p0 = points[0];
-        //do sort here
-
-        int m = 1;
-        for (int i = 1; i < n; i++)
-        {
-            while (i < n - 1 && ori(p0, points[i], points[i+1]) == 0)
-            {
-                i++;
-            }
-            points[m] = points[i];
-            m++;
+    private Point getLowestPoint(List<Point> points) {
+        Point lowest = points.get(0);
+        for(int i = 1; i < points.size(); i++) {
+            Point temp = points.get(i);
+            if(temp.getY() < lowest.getY() || (temp.getY() == lowest.getY() && temp.getX() < lowest.getX()))
+                lowest = temp;
         }
+        return lowest;
+    }
 
-        if (m > 3)
-        {
-            Stack<Point> s = new Stack<Point>();
-            s.push(points[0]);
-            s.push(points[1]);
-            s.push(points[2]);
+    private Set<Point> getSortedPointSet(List<Point> points) {
 
-            for (int i = 3; i < m; i++)
+        Point lowest = getLowestPoint(points);
+
+        TreeSet<Point> set = new TreeSet<Point>(new Comparator<Point>() {
+            @Override
+            public int compare(Point a, Point b)
             {
-                while (ori(nextToTop(s), s.firstElement(), points[i]) != 2)
+                if(a == b)
+                    return 0;
+
+                double tA = Math.atan2(a.getY() - lowest.getY(), a.getX() - lowest.getX());
+                double tB = Math.atan2(b.getY() - lowest.getY(), b.getX() - lowest.getX());
+
+                if(tA < tB)
+                    return -1;
+                else if(tA > tB)
+                    return 1;
+                else
                 {
-                    s.pop();
+                    double distanceA = Math.sqrt(((lowest.getX() - a.getX()) * (lowest.getX() - a.getX())) +
+                            ((lowest.getY() - a.getY()) * (lowest.getY() - a.getY())));
+                    double distanceB = Math.sqrt(((lowest.getX() - b.getX()) * (lowest.getX() - b.getX())) +
+                            ((lowest.getY() - b.getY()) * (lowest.getY() - b.getY())));
+
+                    if(distanceA < distanceB)
+                        return -1;
+                    else
+                        return 1;
                 }
-                s.push(points[i]);
             }
-            while (!s.empty())
-            {
-                Point p = s.firstElement();
-                System.out.println("(" + p.getX() + ", " + p.getY() + ")");
-                s.pop();
-            }
-        }
+        });
+        set.addAll(points);
+        return set;
     }
 
-
-    private Point nextToTop(Stack<Point> S)
+    private int getTurn(Point a, Point b, Point c)
     {
-        Point p = S.firstElement();
-        S.pop();
-        Point p2 = S.firstElement();
-        S.push(p);
-        return p2;
-    }
-
-    private void swap(Point points[], int p1, int p2)
-    {
-        Point temp = points[p1];
-        points[p1] = points[p2];
-        points[p2] = temp;
-    }
-
-    int distanceSquared(Point p1, Point p2)
-    {
-        return (p1.getX() - p2.getX()) * (p1.getX() - p2.getX()) + (p1.getY() - p2.getY()) * (p1.getY() - p2.getY());
-    }
-
-    private int ori(Point a, Point b, Point c)
-    {
-        int value = (b.getY() - a.getY()) * (c.getX() - b.getX()) - (b.getX() - a.getX()) * (c.getY() - b.getY());
-
-        return (value == 0) ? 0 : (value > 0) ? 1 : 2;
-    }
-
-    private int compare(Point p1, Point p2)
-    {
-        int o = ori(p0, p1, p2);
-        if (o == 0)
-        {
-            return (distanceSquared(p0, p2) >= distanceSquared(p0, p1)) ? -1 : 1;
-        }
-        return (o == 2) ? -1 : 1;
+        int cp = ((b.getX() - a.getX()) * (c.getY() - a.getY())) - ((b.getY() - a.getY()) * (c.getX() - a.getX()));
+        if(cp > 0)
+            return 1;
+        else if(cp < 0)
+            return -1;
+        else
+            return 0;
     }
 }

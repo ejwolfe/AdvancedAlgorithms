@@ -1,0 +1,10 @@
+Graham Scan: 2 millis
+Jarvis March: 1 millis
+Quick Hull: 1 millis
+2 0
+4 0
+4 2
+3 3
+1 4
+0 4
+0 1

@@ -2,11 +2,11 @@ import java.util.*;
 
 public final class GrahamScan {
 
-    public List<Point> stack;
+    public List<Point> result;
 
     public GrahamScan(List<Point> points)
     {
-        this.stack = getConvexHull(points);
+        this.result = getConvexHull(points);
     }
 
     private List<Point> getConvexHull(List<Point> points) {
@@ -18,40 +18,40 @@ public final class GrahamScan {
         stack.push(sorted.get(1));
         for (int i = 2; i < sorted.size(); i++)
         {
-            Point head = sorted.get(i);
-            Point middle = stack.pop();
-            Point tail = stack.peek();
-            int turn = getTurn(tail, middle, head);
+            Point top = sorted.get(i);
+            Point mid = stack.pop();
+            Point bottom = stack.peek();
+            int turn = getRotation(bottom, mid, top);
             switch(turn)
             {
                 case -1:
                     i--;
                     break;
                 case 0:
-                    stack.push(head);
+                    stack.push(top);
                     break;
                 case 1:
-                    stack.push(middle);
-                    stack.push(head);
+                    stack.push(mid);
+                    stack.push(top);
                     break;
             }
         }
         return new ArrayList<Point>(stack);
     }
 
-    private Point getLowestPoint(List<Point> points) {
-        Point lowest = points.get(0);
+    private Point getLow(List<Point> points) {
+        Point low = points.get(0);
         for(int i = 1; i < points.size(); i++) {
             Point temp = points.get(i);
-            if(temp.getY() < lowest.getY() || (temp.getY() == lowest.getY() && temp.getX() < lowest.getX()))
-                lowest = temp;
+            if(temp.getY() < low.getY() || (temp.getY() == low.getY() && temp.getX() < low.getX()))
+                low = temp;
         }
-        return lowest;
+        return low;
     }
 
     private Set<Point> getSortedPointSet(List<Point> points) {
 
-        Point lowest = getLowestPoint(points);
+        Point low = getLow(points);
 
         TreeSet<Point> set = new TreeSet<Point>(new Comparator<Point>() {
             @Override
@@ -60,8 +60,8 @@ public final class GrahamScan {
                 if(a == b)
                     return 0;
 
-                double tA = Math.atan2(a.getY() - lowest.getY(), a.getX() - lowest.getX());
-                double tB = Math.atan2(b.getY() - lowest.getY(), b.getX() - lowest.getX());
+                double tA = Math.atan2(a.getY() - low.getY(), a.getX() - low.getX());
+                double tB = Math.atan2(b.getY() - low.getY(), b.getX() - low.getX());
 
                 if(tA < tB)
                     return -1;
@@ -69,11 +69,10 @@ public final class GrahamScan {
                     return 1;
                 else
                 {
-                    double distanceA = Math.sqrt(((lowest.getX() - a.getX()) * (lowest.getX() - a.getX())) +
-                            ((lowest.getY() - a.getY()) * (lowest.getY() - a.getY())));
-                    double distanceB = Math.sqrt(((lowest.getX() - b.getX()) * (lowest.getX() - b.getX())) +
-                            ((lowest.getY() - b.getY()) * (lowest.getY() - b.getY())));
-
+                    double distanceA = Math.sqrt(((low.getX() - a.getX()) * (low.getX() - a.getX())) +
+                            ((low.getY() - a.getY()) * (low.getY() - a.getY())));
+                    double distanceB = Math.sqrt(((low.getX() - b.getX()) * (low.getX() - b.getX())) +
+                            ((low.getY() - b.getY()) * (low.getY() - b.getY())));
                     if(distanceA < distanceB)
                         return -1;
                     else
@@ -85,7 +84,7 @@ public final class GrahamScan {
         return set;
     }
 
-    private int getTurn(Point a, Point b, Point c)
+    private int getRotation(Point a, Point b, Point c)
     {
         int cp = ((b.getX() - a.getX()) * (c.getY() - a.getY())) - ((b.getY() - a.getY()) * (c.getX() - a.getX()));
         if(cp > 0)

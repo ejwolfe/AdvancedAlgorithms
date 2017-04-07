@@ -7,7 +7,8 @@ public class main {
     {
         int arr[] = new int[]{81, 54, 4, 2, 1};
         QuickSort qs = new QuickSort(arr);
-        RandomizedQuickSort rqs = new RandomizedQuickSort(arr);
+        int arr2[] = new int[]{81, 54, 4, 2, 1};
+        RandomizedQuickSort rqs = new RandomizedQuickSort(arr2);
 
     }
 }

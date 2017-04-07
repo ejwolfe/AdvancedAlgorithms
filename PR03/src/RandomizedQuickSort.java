@@ -8,35 +8,40 @@ public class RandomizedQuickSort {
 
     //Constructor for running quick sort
     public RandomizedQuickSort(int[] array) {
-        randomizedQuickSort(array, 0, array.length);
+        randomizedQuickSort(array, 0, array.length - 1);
         printResults(array);
     }
 
     //main quicksort function
     private void randomizedQuickSort(int[] array, int low, int high){
         if (low < high){
-            int pivot_location = partition(array, low, high);
-            randomizedQuickSort(array, low, pivot_location);
-            randomizedQuickSort(array, pivot_location+1, high);
+            int pivot_location = randomizedPartition(array, low, high);
+            randomizedQuickSort(array, low, pivot_location - 1);
+            randomizedQuickSort(array, pivot_location + 1, high);
         }
     }
 
     //runs the parition for randomized quick sort
-    private int partition(int array[], int low, int high){
+    private int randomizedPartition(int array[], int low, int high){
         Random random = new Random(); //Make a new random
-        int leftwall = random.nextInt((high - low) + 1) + low;
-        swap(array, array[leftwall], array[high]);
-        int pivot = array[high];
-        leftwall = low - 1;
+        int i = random.nextInt(high - low + 1) + low;
+        swap(array, low, i);
+        return partition(array, low, high);
+    }
 
-        for (int i = low; i < high - 1; i++){
-            if (array[i] <= pivot){
+    //parition from PR01
+    private int partition(int array[], int low, int high){
+        int pivot = array[low];
+        int leftwall = low + 1;
+
+        for (int i = low + 1; i <= high; i++){
+            if (array[i] < pivot){
                 swap(array, i, leftwall);
                 leftwall++;
             }
         }
-        swap(array, array[leftwall+1], array[high]);
-        return leftwall + 1;
+        swap(array, low, leftwall - 1);
+        return leftwall - 1;
     }
 
     //Swap function for when curren position and the leftwall
@@ -46,6 +51,7 @@ public class RandomizedQuickSort {
         array[num2] = temp;
     }
 
+    //Printing function for debugging
     private void printResults(int array[])
     {
         for (int i = 0; i < array.length; i++)

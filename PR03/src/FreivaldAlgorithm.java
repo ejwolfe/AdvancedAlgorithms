@@ -16,7 +16,7 @@ public class FreivaldAlgorithm {
         System.out.println("Running algorithm");
         System.out.println(freivaldAlgorithm(matrixA, matrixB, result));
         System.out.println("Running altered result matrix");
-        result[2][2] = 0;
+        result[matrixA.length-1][matrixA.length-1] = 0;
         System.out.println(freivaldAlgorithm(matrixA, matrixB, result));
     }
 

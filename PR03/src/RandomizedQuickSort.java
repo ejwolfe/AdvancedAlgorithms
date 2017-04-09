@@ -24,7 +24,7 @@ public class RandomizedQuickSort {
     //runs the parition for randomized quick sort
     private int randomizedPartition(int array[], int low, int high){
         Random random = new Random(); //Make a new random
-        int i = random.nextInt(high - low + 1) + low;
+        int i = random.nextInt(high - low + 1) + low; //Make sure that the random number is in the correct bounds (low ... high)
         swap(array, low, i);
         return partition(array, low, high);
     }

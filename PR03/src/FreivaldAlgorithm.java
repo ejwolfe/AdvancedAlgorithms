@@ -6,34 +6,21 @@ import java.util.Random;
 public class FreivaldAlgorithm {
     private int size;
 
-    public FreivaldAlgorithm(int matrixA[][], int matrixB[][], int size)
+    public FreivaldAlgorithm(int matrixA[][], int matrixB[][], int size, int matrixC[][])
     {
         this.size = size;
-        int result[][] = calculateResultMatrix(matrixA, matrixB);
         printMatrix(matrixA);
         printMatrix(matrixB);
-        printMatrix(result);
+        printMatrix(matrixC);
         System.out.println("Running algorithm");
-        System.out.println(freivaldAlgorithm(matrixA, matrixB, result));
-        System.out.println("Running altered result matrix");
-        result[matrixA.length-1][matrixA.length-1] = 0;
-        System.out.println(freivaldAlgorithm(matrixA, matrixB, result));
-    }
-
-    private int[][] calculateResultMatrix(int matrixA[][], int matrixB[][])
-    {
-        int result[][] = new int[size][size];
-        for (int x = 0; x < size; x++)
+        System.out.println(freivaldAlgorithm(matrixA, matrixB, matrixC));
+        int c = matrixA.length-1;
+        System.out.println("Running altered result matrix with space " + c + " " + c + "being 0");
+        matrixC[matrixA.length-1][matrixA.length-1] = 0;
+        for (int i = 0; i < 5; i++)
         {
-            for (int y = 0; y < size; y++)
-            {
-                for (int z = 0; z < size; z++)
-                {
-                    result[x][y] += matrixA[x][z] * matrixB[z][y];
-                }
-            }
+            System.out.println("Altered matrix test " + i + ": " + freivaldAlgorithm(matrixA, matrixB, matrixC));
         }
-        return result;
     }
 
     private int[][] calculateResultMatries(int matrixA[][], int matrixB[][])

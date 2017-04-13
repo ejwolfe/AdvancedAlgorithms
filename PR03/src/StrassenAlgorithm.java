@@ -3,11 +3,14 @@
  */
 public class StrassenAlgorithm {
 
+    public int result[][];
+
     public StrassenAlgorithm(int matrixA[][], int matrixB[][])
     {
         if (matrixA.length % 2 == 0) //Makes sure that the matrix is a power of 2
         {
-            printMatrix(strassenAlgorithm(matrixA, matrixB));
+            this.result = strassenAlgorithm(matrixA, matrixB);
+            printMatrix(result);
         }
         else
         {

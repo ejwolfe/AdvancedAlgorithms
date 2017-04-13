@@ -1,0 +1,19 @@
+5Out.txt
+QuickSort: 1ms
+Randomized QuickSort: 0ms
+Strassen's Algorithm: 1ms
+Freivald's Algorithm: 2ms
+
+Matrix Multiplied 
+yes
+35 24 57 11 
+91 77 183 50 
+67 29 138 30 
+64 31 126 0 
+
+ Sorted List 5
+6
+7
+18
+32
+35

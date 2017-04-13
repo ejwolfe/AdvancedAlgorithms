@@ -5,6 +5,7 @@ import java.util.Random;
  */
 public class FreivaldAlgorithm {
     private int size;
+    public String answer;
 
     public FreivaldAlgorithm(int matrixA[][], int matrixB[][], int size, int matrixC[][])
     {
@@ -81,8 +82,10 @@ public class FreivaldAlgorithm {
         int P[][] = subtractMatrix(ABr, Cr);
         if(checkMatrix(P))
         {
+            answer = "yes";
             return true;
         }
+        answer = "no";
         return false;
     }
 

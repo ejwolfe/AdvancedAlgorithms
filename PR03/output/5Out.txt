@@ -1,0 +1,17 @@
+5Out.txt
+QuickSort: 1ms
+Randomized QuickSort: 0ms
+Strassen's Algorithm: 1ms
+Freivald's Algorithm: 0ms
+
+Matrix Multiplied 
+yes
+5 11 
+12 0 
+
+ Sorted List 5
+1
+2
+3
+6
+10

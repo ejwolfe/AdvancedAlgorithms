@@ -1,7 +1,7 @@
 import java.util.Random;
 
 /**
- * Created by GlitchRebel on 4/7/2017.
+ * Created by Eric Wolfe on 4/7/2017.
  */
 public class FreivaldAlgorithm {
     private int size;
@@ -10,20 +10,28 @@ public class FreivaldAlgorithm {
     public FreivaldAlgorithm(int matrixA[][], int matrixB[][], int size, int matrixC[][])
     {
         this.size = size;
-        printMatrix(matrixA);
-        printMatrix(matrixB);
-        printMatrix(matrixC);
-        System.out.println("Running algorithm");
-        System.out.println(freivaldAlgorithm(matrixA, matrixB, matrixC));
-        int c = matrixA.length-1;
-        System.out.println("Running altered result matrix with space " + c + " " + c + "being 0");
         matrixC[matrixA.length-1][matrixA.length-1] = 0;
+        freivaldAlgorithm(matrixA, matrixB, matrixC);
+        //For testing
+        /*double a = 0;
+        double b = 0;
         for (int i = 0; i < 5; i++)
         {
-            System.out.println("Altered matrix test " + i + ": " + freivaldAlgorithm(matrixA, matrixB, matrixC));
+            boolean test = freivaldAlgorithm(matrixA, matrixB, matrixC);
+            if (test == true)
+            {
+                a++;
+            }
+            else
+            {
+                b++;
+            }
         }
+        System.out.println((a/b));
+        */
     }
 
+    //Helper function for calculating the result matrices
     private int[][] calculateResultMatries(int matrixA[][], int matrixB[][])
     {
         int result[][] = new int[size][1];
@@ -40,6 +48,7 @@ public class FreivaldAlgorithm {
         return result;
     }
 
+    //Helper function for subtracting the size x 1 matrix from the result matrix
     private int[][] subtractMatrix(int matrixA[][], int matrixB[][])
     {
         int result[][] = new int[size][1];
@@ -54,20 +63,22 @@ public class FreivaldAlgorithm {
         return result;
     }
 
+    //Helper function for checking to see if the matrix that is passed has zeros
     private boolean checkMatrix(int matrixA[][])
     {
-        boolean flag = true;
+        boolean result = true;
 
         for (int x = 0; x < size; x++)
         {
             if (matrixA[x][0] != 0)
             {
-                flag = false;
+                result = false;
             }
         }
-        return flag;
+        return result;
     }
 
+    //Freivald algorithm for randomly checking to see if the result matrix is correct
     private boolean freivaldAlgorithm(int matrixA[][], int matrixB[][], int resultMatrix[][])
     {
         int r[][] = new int[size][1];

@@ -10,7 +10,7 @@ public class StrassenAlgorithm {
         if (matrixA.length % 2 == 0) //Makes sure that the matrix is a power of 2
         {
             this.result = strassenAlgorithm(matrixA, matrixB);
-            printMatrix(result);
+            //printMatrix(result);
         }
         else
         {

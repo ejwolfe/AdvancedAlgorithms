@@ -9,7 +9,7 @@ public class RandomizedQuickSort {
     //Constructor for running quick sort
     public RandomizedQuickSort(int[] array) {
         randomizedQuickSort(array, 0, array.length - 1);
-        printResults(array);
+        //printResults(array);
     }
 
     //main quicksort function
@@ -29,7 +29,7 @@ public class RandomizedQuickSort {
         return partition(array, low, high);
     }
 
-    //parition from PR01
+    //Partition from PR01
     private int partition(int array[], int low, int high){
         int pivot = array[low];
         int leftwall = low + 1;
